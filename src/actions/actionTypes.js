@@ -1,0 +1,7 @@
+export const USER_DATA = 'USER_DATA';
+export const EXPENSE_ACTION = 'EXPENSE_ACTION';
+export const LOADING_TYPE = ' LOADING_TYPE';
+export const SUCCESS_TYPE = 'SUCCESS_TYPE';
+export const ERROR_TYPE = 'ERROR_TYPE';
+export const CHANGE_EXPENSE = 'CHANGE_EXPENSE';
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
