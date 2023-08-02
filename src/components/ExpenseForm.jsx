@@ -1,72 +1,55 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { fetchCoins, fetchExpenseAPI } from '../actions';
 import Input from './Input';
 import Select from './Select';
 import { methods, tags } from '../validations/data';
 
-class ExpenseForm extends React.Component {
-  constructor() {
-    super();
+const ExpenseForm = () => {
+  const [expense, setExpense] = useState({
+    id: 0,
+    value: 0,
+    description: '',
+    currency: 'USD',
+    method: 'Dinheiro',
+    tag: 'Alimentação',
+  });
 
-    this.state = {
-      expense: {
-        id: 0,
-        value: 0,
-        description: '',
-        currency: 'USD',
-        method: 'Dinheiro',
-        tag: 'Alimentação',
-      },
-    };
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.inputs = this.inputs.bind(this);
-    this.clearInputs = this.clearInputs.bind(this);
-  }
+  const currencies = useSelector((state) => state.wallet.currencies);
+  const dispatch = useDispatch();
 
-  componentDidMount() {
-    const { dispatchRequest } = this.props;
-    dispatchRequest();
-  }
+  useEffect(() => {
+    dispatch(fetchCoins());
+  }, [dispatch]);
 
-  handleSubmit(event) {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    const { expense } = this.state;
-    const { dispatchExpenses } = this.props;
-    this.setState({
-      expense: {
-        id: expense.id + 1,
-        value: 0,
-        description: '',
-        currency: 'USD',
-        method: 'Dinheiro',
-        tag: 'Alimentação',
-      },
-    }, () => {
-      dispatchExpenses(expense);
-      this.clearInputs();
+    dispatch(fetchExpenseAPI(expense));
+    setExpense({
+      id: expense.id + 1,
+      value: 0,
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
     });
-  }
+    clearInputs();
+  };
 
-  clearInputs() {
+  const clearInputs = () => {
     document.getElementById('formContainer').reset();
-  }
+  };
 
-  handleChange({ target }) {
+  const handleChange = ({ target }) => {
     const { name, value } = target;
-    const { expense } = this.state;
-    this.setState({
-      expense: {
-        ...expense,
-        [name]: value,
-      },
-    });
-  }
+    setExpense((prevExpense) => ({
+      ...prevExpense,
+      [name]: value,
+    }));
+  };
 
-  inputs() {
+  const inputs = () => {
     return (
       <div>
         <Input
@@ -75,7 +58,7 @@ class ExpenseForm extends React.Component {
           placeholder="0"
           id="expense-value"
           labelText="Valor"
-          onChange={ this.handleChange }
+          onChange={handleChange}
         />
         <Input
           type="text"
@@ -83,68 +66,52 @@ class ExpenseForm extends React.Component {
           placeholder="..."
           id="expense-description"
           labelText="Descrição"
-          onChange={ this.handleChange }
+          onChange={handleChange}
         />
       </div>
     );
-  }
+  };
 
-  render() {
-    const { currency, method, tag } = this.state;
-    const { currencies } = this.props;
-    const filterCoins = Object.keys(currencies);
-    const filterCurrencies = filterCoins.filter((item) => item !== 'USDT');
-    return (
-      <form onSubmit={ this.handleSubmit } id="formContainer">
-        { this.inputs() }
-        <Select
-          value={ currency }
-          name="currency"
-          labelText="Moeda"
-          id="expense-currency"
-          options={ filterCurrencies }
-          onChange={ this.handleChange }
-        />
-        <Select
-          name="method"
-          value={ method }
-          labelText="Método de pagamento"
-          id="expense-payment"
-          options={ methods }
-          onChange={ this.handleChange }
-        />
-        <Select
-          name="tag"
-          value={ tag }
-          labelText="Tag"
-          id="expense-category"
-          options={ tags }
-          onChange={ this.handleChange }
-        />
-        <button
-          type="submit"
-          name="expense-submit"
-          id="expense-submit"
-        >
-          Adicionar despesas
-        </button>
-      </form>
-    );
-  }
-}
+  const filterCoins = Object.keys(currencies);
+  const filterCurrencies = filterCoins.filter((item) => item !== 'USDT');
+
+  return (
+    <form onSubmit={handleSubmit} id="formContainer">
+      {inputs()}
+      <Select
+        value={expense.currency}
+        name="currency"
+        labelText="Moeda"
+        id="expense-currency"
+        options={filterCurrencies}
+        onChange={handleChange}
+      />
+      <Select
+        name="method"
+        value={expense.method}
+        labelText="Método de pagamento"
+        id="expense-payment"
+        options={methods}
+        onChange={handleChange}
+      />
+      <Select
+        name="tag"
+        value={expense.tag}
+        labelText="Tag"
+        id="expense-category"
+        options={tags}
+        onChange={handleChange}
+      />
+      <button type="submit" name="expense-submit" id="expense-submit">
+        Adicionar despesas
+      </button>
+    </form>
+  );
+};
 
 ExpenseForm.propTypes = {
   dispatchRequest: PropTypes.func,
   currencies: PropTypes.objectOf(PropTypes.object),
-}.isRequired;
+};
 
-const mapStateToProps = (state) => ({
-  currencies: state.wallet.currencies,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  dispatchRequest: () => dispatch(fetchCoins()),
-  dispatchExpenses: (payload) => dispatch(fetchExpenseAPI(payload)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ExpenseForm);
+export default ExpenseForm;
