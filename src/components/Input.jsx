@@ -1,35 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-class Input extends React.Component {
-  render() {
-    const {
-      name,
-      type,
-      labelText,
-      placeHolder,
-      id, testid,
-      onChange,
-      value,
-    } = this.props;
-    return (
-      <div>
-        <label htmlFor={ id }>
-          { labelText }
-          <input
-            type={ type }
-            name={ name }
-            value={ value }
-            id={ id }
-            placeholder={ placeHolder }
-            testid={ testid }
-            onChange={ onChange }
-          />
-        </label>
-      </div>
-    );
-  }
-}
+const Input = ({
+  name,
+  type,
+  labelText,
+  placeholder,
+  id,
+  testID,
+  onChange,
+  value,
+}) => {
+  return (
+    <div>
+      <label htmlFor={id}>
+        {labelText}
+        <input
+          type={type}
+          name={name}
+          value={value}
+          id={id}
+          placeholder={placeholder}
+          testid={testID} // Changed from testID to testid to match usage
+          onChange={onChange}
+        />
+      </label>
+    </div>
+  );
+};
 
 Input.propTypes = {
   type: PropTypes.string,
@@ -38,7 +36,7 @@ Input.propTypes = {
   placeholder: PropTypes.string,
   className: PropTypes.string,
   id: PropTypes.string,
-  testID: PropTypes.string,
+  testID: PropTypes.string, // Changed from testID to testid to match usage
   onChange: PropTypes.func,
 }.isRequired;
 
