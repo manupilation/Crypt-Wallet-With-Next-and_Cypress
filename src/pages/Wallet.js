@@ -2,8 +2,7 @@ import React from 'react';
 import { ExpenseForm, Header } from '../components';
 import Table from '../components/Table';
 
-class Wallet extends React.Component {
-  render() {
+function Wallet() {
     return (
       <div>
         <Header />
@@ -11,7 +10,6 @@ class Wallet extends React.Component {
         <Table />
       </div>
     );
-  }
 }
 
 export default Wallet;
