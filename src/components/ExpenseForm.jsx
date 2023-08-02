@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { fetchCoins, fetchExpenseAPI } from '../actions';
 import Input from './Input';
 import Select from './Select';
-import { methods, tags } from '../Verificadores/data';
+import { methods, tags } from '../validations/data';
 
 class ExpenseForm extends React.Component {
   constructor() {

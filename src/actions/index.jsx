@@ -1,5 +1,5 @@
 // Coloque aqui suas actions
-import { fetchApiCoins } from '../Verificadores';
+import { fetchApiCoins } from '../validations';
 import {
   USER_DATA,
   EXPENSE_ACTION,
