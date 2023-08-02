@@ -1,5 +1,5 @@
 // Coloque aqui suas actions
-import { fetchApiCoins } from '../validations';
+import { CODE_ERROR, urlFetchAllCoinsAPI } from '../constants/generalConstants';
 import {
   USER_DATA,
   EXPENSE_ACTION,
@@ -37,18 +37,21 @@ export const loadingAction = () => ({
   type: LOADING_TYPE,
 });
 
-export const fetchCoins = () => (dispatch) => {
+export const fetchCoins = () => async (dispatch) => {
   dispatch(loadingAction());
 
-  return fetchApiCoins()
-    .then(
-      (response) => dispatch(sucessAction(response)), () => dispatch(errorAction()),
-    );
+  const requisicao = await (await fetch(urlFetchAllCoinsAPI)).json();
+
+  if (requisicao.status && requisicao.status == CODE_ERROR) {
+    return dispatch(errorAction(requisicao));
+  }
+
+  return dispatch(sucessAction(requisicao));
 };
 
 export const fetchExpenseAPI = (payload) => async (dispatch) => {
   try {
-    const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+    const response = await fetch(urlFetchAllCoinsAPI);
     const result = await response.json();
     delete result.USDT;
     const expense = { ...payload, exchangeRates: result };
