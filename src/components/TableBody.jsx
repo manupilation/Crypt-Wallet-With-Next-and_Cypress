@@ -1,84 +1,66 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { deleteExpense } from '../actions';
 import Button from './Button';
 
-class TableBody extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-    this.handleClick = this.handleClick.bind(this);
-  }
+const TableBody = () => {
+  const getExpenses = useSelector((state) => state.wallet.expenses);
+  const dispatch = useDispatch();
 
-  handleClick({ target }) {
-    const { remove } = this.props;
+  const handleClick = (expenseId) => {
+    dispatch(deleteExpense(expenseId));
+  };
 
-    const getExpenseId = parseInt(target.name, 10);
-    remove(getExpenseId);
-  }
+  return (
+    <tbody>
+      {getExpenses.map((expense) => {
+        const {
+          id,
+          currency,
+          description,
+          tag,
+          method,
+          value,
+          exchangeRates,
+        } = expense;
 
-  render() {
-    const { getExpenses } = this.props;
+        return (
+          <tr key={id}>
+            <td>{description}</td>
+            <td>{tag}</td>
+            <td>{method}</td>
+            <td>{value}</td>
+            <td>{exchangeRates[currency].name.split('/')[0]}</td>
+            <td>{Number(exchangeRates[currency].ask).toFixed(2)}</td>
+            <td>{Number(exchangeRates[currency].ask * value).toFixed(2)}</td>
+            <td>Real</td>
+            <td>
+              <Button
+                type="button"
+                name={id}
+                testID="delete-btn"
+                onClick={() => handleClick(id)}
+                text="Excluir"
+              />
 
-    return (
-      <tbody>
-        { getExpenses.map((expense) => {
-          const {
-            id,
-            currency,
-            description,
-            tag,
-            method,
-            value,
-            exchangeRates,
-          } = expense;
-
-          return (
-            <tr key={ id }>
-              <td>{ description }</td>
-              <td>{ tag }</td>
-              <td>{ method }</td>
-              <td>{ value }</td>
-              <td>{(exchangeRates[currency].name).split('/')[0]}</td>
-              <td>{Number(exchangeRates[currency].ask).toFixed(2)}</td>
-              <td>{Number(exchangeRates[currency].ask * value).toFixed(2)}</td>
-              <td>Real</td>
-              <td>
-                <Button
-                  type="button"
-                  name={ id }
-                  testID="delete-btn"
-                  onClick={ this.handleClick }
-                  text="Excluir"
-                />
-
-                <Button
-                  type="button"
-                  name={ id }
-                  testID="edit-btn"
-                  onClick={ this.handleClick }
-                  text="Editar"
-                />
-              </td>
-            </tr>
-          );
-        })}
-      </tbody>
-    );
-  }
-}
+              <Button
+                type="button"
+                name={id}
+                testID="edit-btn"
+                onClick={() => handleClick(id)}
+                text="Editar"
+              />
+            </td>
+          </tr>
+        );
+      })}
+    </tbody>
+  );
+};
 
 TableBody.propTypes = {
   getExpenses: PropTypes.arrayOf(PropTypes.object),
-}.isRequired;
+};
 
-const mapStateToProps = (state) => ({
-  getExpenses: state.wallet.expenses,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  remove: (expenseId) => dispatch(deleteExpense(expenseId)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(TableBody);
+export default TableBody;
