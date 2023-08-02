@@ -13,7 +13,7 @@ class TableBody extends React.Component {
 
   handleClick({ target }) {
     const { remove } = this.props;
-    console.log('l15', this.props);
+
     const getExpenseId = parseInt(target.name, 10);
     remove(getExpenseId);
   }
