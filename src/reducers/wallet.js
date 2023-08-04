@@ -15,6 +15,7 @@ const INITIAL_STATE = {
 
 const wallet = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+
   case EXPENSE_ACTION:
     return {
       ...state,
@@ -25,26 +26,31 @@ const wallet = (state = INITIAL_STATE, action) => {
         }],
       error: '',
     };
+
   case CHANGE_EXPENSE:
     return {
       ...state,
       expenses: [...state.expenses, { ...action.payload }],
     };
+
   case LOADING_TYPE:
     return {
       ...state,
       isLoading: true,
     };
+
   case SUCCESS_TYPE:
     return {
       ...state,
       currencies: action.payload,
     };
+
   case ERROR_TYPE:
     return {
       ...state,
       error: 'error',
     };
+
   case DELETE_EXPENSE:
     return {
       ...state,
