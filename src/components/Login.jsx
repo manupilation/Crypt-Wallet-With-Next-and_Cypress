@@ -77,7 +77,7 @@ const Login = () => {
 };
 
 Login.propTypes = {
-  setEmailToStore: PropTypes.func.isRequired,
+  setEmailToStore: PropTypes.func,
 };
 
 export default Login;
