@@ -5,6 +5,7 @@ import { fetchCoins, fetchExpenseAPI } from '../actions';
 import Input from './Input';
 import Select from './Select';
 import { methods, tags } from '../validations/data';
+import EditExpenseForm from './EditExpenseForm/EditExpenseForm';
 
 const ExpenseForm = () => {
   const [expense, setExpense] = useState({
@@ -17,6 +18,8 @@ const ExpenseForm = () => {
   });
 
   const currencies = useSelector((state) => state.wallet.currencies);
+  const isEditing = useSelector((state) => state.wallet.isEditing);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -49,35 +52,25 @@ const ExpenseForm = () => {
     }));
   };
 
-  const inputs = () => {
-    return (
-      <div>
-        <Input
-          type="number"
-          name="value"
-          placeholder="0"
-          id="expense-value"
-          labelText="Valor"
-          onChange={handleChange}
-        />
-        <Input
-          type="text"
-          name="description"
-          placeholder="..."
-          id="expense-description"
-          labelText="Descrição"
-          onChange={handleChange}
-        />
-      </div>
-    );
-  };
-
   const filterCoins = Object.keys(currencies);
   const filterCurrencies = filterCoins.filter((item) => item !== 'USDT');
 
+  if (isEditing[0]) {
+    return (
+      <EditExpenseForm currencies={filterCurrencies} id={isEditing[1]}/>
+    );
+  };
+
   return (
     <form onSubmit={handleSubmit} id="formContainer">
-      {inputs()}
+      <Input
+        type="number"
+        name="value"
+        placeholder="0"
+        id="expense-value"
+        labelText="Valor"
+        onChange={handleChange}
+      />
       <Select
         value={expense.currency}
         name="currency"
@@ -100,6 +93,14 @@ const ExpenseForm = () => {
         labelText="Tag"
         id="expense-category"
         options={tags}
+        onChange={handleChange}
+      />
+      <Input
+        type="text"
+        name="description"
+        placeholder="..."
+        id="expense-description"
+        labelText="Descrição"
         onChange={handleChange}
       />
       <button type="submit" name="expense-submit" id="expense-submit">
