@@ -7,7 +7,8 @@ import {
   LOADING_TYPE,
   ERROR_TYPE,
   SUCCESS_TYPE,
-  DELETE_EXPENSE } from './actionTypes';
+  DELETE_EXPENSE, 
+  TOGGLE_IS_EDITING} from './actionTypes';
 
 export const actionUserData = (payload) => ({
   type: USER_DATA,
@@ -65,4 +66,9 @@ export const fetchExpenseAPI = (payload) => async (dispatch) => {
 export const deleteExpense = (id) => ({
   type: DELETE_EXPENSE,
   id,
+});
+
+export const actionToggleIsEditing = (boolEditing) => ({
+  type: TOGGLE_IS_EDITING,
+  boolEditing,
 });
