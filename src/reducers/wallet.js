@@ -5,11 +5,16 @@ import {
   LOADING_TYPE,
   ERROR_TYPE,
   SUCCESS_TYPE,
-  DELETE_EXPENSE } from '../actions/actionTypes';
+  DELETE_EXPENSE,
+  TOGGLE_IS_EDITING,
+  } from '../actions/actionTypes';
+
+// isEditing have two properties: [0] is the toggle activation and [1] is the expense id;
 
 const INITIAL_STATE = {
   currencies: {},
   isLoading: false,
+  isEditing: [false, null],
   expenses: [],
 };
 
@@ -56,6 +61,13 @@ const wallet = (state = INITIAL_STATE, action) => {
       ...state,
       expenses: state.expenses.filter((expense) => expense.id !== action.id),
     };
+
+  case TOGGLE_IS_EDITING:
+    return {
+      ...state,
+      isEditing: action.boolEditing,
+    };
+
   default:
     return state;
   }
