@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { deleteExpense } from '../actions';
 import Button from './Button';
+import { actionToggleIsEditing } from '../actions';
 
 const TableBody = () => {
   const getExpenses = useSelector((state) => state.wallet.expenses);
@@ -11,6 +12,10 @@ const TableBody = () => {
   const handleClick = (expenseId) => {
     dispatch(deleteExpense(expenseId));
   };
+
+  const handleIsEditing = (id) => {
+    dispatch(actionToggleIsEditing([true, id]));
+  }
 
   return (
     <tbody>
@@ -48,7 +53,7 @@ const TableBody = () => {
                 type="button"
                 name={id}
                 testID="edit-btn"
-                onClick={() => handleClick(id)}
+                onClick={() => handleIsEditing(id)}
                 text="Editar"
               />
             </td>
