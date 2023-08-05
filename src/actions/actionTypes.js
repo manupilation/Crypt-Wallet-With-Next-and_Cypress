@@ -5,3 +5,4 @@ export const SUCCESS_TYPE = 'SUCCESS_TYPE';
 export const ERROR_TYPE = 'ERROR_TYPE';
 export const CHANGE_EXPENSE = 'CHANGE_EXPENSE';
 export const DELETE_EXPENSE = 'DELETE_EXPENSE';
+export const TOGGLE_IS_EDITING = 'TOGGLE_IS_EDITING';
