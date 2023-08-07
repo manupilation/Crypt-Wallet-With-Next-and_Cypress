@@ -4,6 +4,8 @@ import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { emailChecker, passwordChecker } from '../../validations';
 import { actionUserData } from '../../actions';
+import styles from './style.module.scss';
+import Image from 'next/image';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -49,28 +51,31 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div className={styles.loginWrapper}>
       <form className="Login-Form-Container" onSubmit={handleSubmit}>
-        <label htmlFor="Login-Form">
+        <Image src="/images/logo.png" alt='Wallet Logo' width={300} height={150}/>
+
+        <label htmlFor="loginUser">
           <input
-            type="text"
+            autoComplete='off'
+            type="email"
             data-testid="email-input"
-            name="Login-Form"
-            className="Login-Form"
-            placeholder="Usuário..."
+            name="loginUser"
+            placeholder="Usuário"
             onChange={validateEmail}
           />
+        <label />
+        <label htmlFor=""></label>
           <input
             type="password"
             data-testid="password-input"
-            name="Login-Form"
-            className="Login-Form"
-            placeholder="Senha..."
+            name="loginPass"
+            placeholder="Senha"
             minLength="6"
             onChange={validatePass}
           />
-          <input type="submit" disabled={invalidUser || invalidPassword} value="Entrar" />
         </label>
+        <input type="submit" disabled={invalidUser || invalidPassword} value="Entrar" />
       </form>
     </div>
   );
