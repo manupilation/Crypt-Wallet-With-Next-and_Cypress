@@ -2,10 +2,11 @@
 
 import React from "react";
 import LoginPage from "./login";
+import MyApp from "./_app";
 
 function App() {
   return (
-    <LoginPage />
+    <MyApp Component={LoginPage}/>
   );
 }
 
