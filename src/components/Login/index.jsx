@@ -75,7 +75,12 @@ const Login = () => {
             onChange={validatePass}
           />
         </label>
-        <input type="submit" disabled={invalidUser || invalidPassword} value="Entrar" />
+        <input
+          type="submit"
+          disabled={invalidUser || invalidPassword}
+          value="Entrar"
+          data-testid="submit-button"
+        />
       </form>
     </div>
   );
