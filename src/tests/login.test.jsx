@@ -1,11 +1,12 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import { response as mockData } from './mockData';
+import { response as mockData } from './__mocks__/mockData';
 import Login from '../components/Login';
 import * as ReactRedux from 'react-redux';
+import {expect} from '@jest/globals';
 
 jest.mock('next/router', () => require('next-router-mock'));
-// Mock do useDispatch para evitar a chamada real da ação
+
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useDispatch: jest.fn(),
@@ -13,8 +14,6 @@ jest.mock('react-redux', () => ({
 
 const mockDispatch = jest.fn();
 let dispatchSpyon;
-
-
 
 const apiResponse = Promise.resolve({
   json: () => Promise.resolve(mockData),
@@ -37,23 +36,25 @@ afterAll(() => {
 })
 
 describe('Login Component', () => {
-  it('renders without errors', () => {
-    render(<Login />);
+  it('Renders without errors', () => {
+    const { container } = render(<Login />);
+
+    expect(container.hasChildNodes()).toBeTruthy();
   });
 
-  it('displays the logo', () => {
+  it('Render the logo component', () => {
     const { getByAltText } = render(<Login />);
     const logo = getByAltText('Wallet Logo');
     expect(logo).toBeInTheDocument();
   });
 
-  it('disables the submit button initially', () => {
+  it('Disables the submit button initially', () => {
     const { getByTestId } = render(<Login />);
     const submitButton = getByTestId('submit-button');
     expect(submitButton).toBeDisabled();
   });
 
-  it('enables the submit button after valid email and password are entered', () => {
+  it('Enables the submit button after valid email and password are entered', () => {
     const { getByTestId } = render(<Login />);
     const emailInput = getByTestId('email-input');
     const passwordInput = getByTestId('password-input');
