@@ -228,8 +228,8 @@ export const initialStateWithExpenses = {
   },
   wallet: {
     isFetching: false,
-    editor: false,
-    idToEdit: 0,
+    isLoading: false,
+    isEditing: [false, null],
     currencyToExchange: 'BRL',
     currencies: [
       'USD',
