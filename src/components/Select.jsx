@@ -9,13 +9,12 @@ const Select = ({ name, labelText, id, options, onChange, selected = "" }) => {
         name={name}
         id={id}
         onChange={onChange}
+        defaultValue={selected || options[0]}
       >
         {
           options && options.map((op, i) => (
             <option
               key={i}
-              value={op}
-              selected={op === selected}
             >
               {op}
             </option>
