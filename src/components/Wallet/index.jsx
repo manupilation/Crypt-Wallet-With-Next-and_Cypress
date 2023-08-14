@@ -1,6 +1,6 @@
 import React from 'react';
-import { ExpenseForm, Header } from '../components';
-import Table from '../components/Table';
+import { ExpenseForm, Header } from '..';
+import Table from '../Table';
 
 function Wallet() {
     return (

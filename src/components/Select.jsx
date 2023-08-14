@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Select = ({ name, labelText, id, options, onChange }) => {
+const Select = ({ name, labelText, id, options, onChange, selected = "" }) => {
   return (
     <label htmlFor={id}>
       {labelText}
@@ -9,12 +9,12 @@ const Select = ({ name, labelText, id, options, onChange }) => {
         name={name}
         id={id}
         onChange={onChange}
+        defaultValue={selected || options[0]}
       >
         {
-          options.map((op, i) => (
+          options && options.map((op, i) => (
             <option
               key={i}
-              value={op}
             >
               {op}
             </option>

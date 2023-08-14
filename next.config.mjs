@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export', // Outputs a Single-Page Application (SPA)
-  distDir: './dist', // Changes the output directory `./dist/`
+  output: 'export',
+  images: { unoptimized: true }
 }
 export default nextConfig;

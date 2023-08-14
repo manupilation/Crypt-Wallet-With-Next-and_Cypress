@@ -5,16 +5,22 @@ import {
   LOADING_TYPE,
   ERROR_TYPE,
   SUCCESS_TYPE,
-  DELETE_EXPENSE } from '../actions/actionTypes';
+  DELETE_EXPENSE,
+  TOGGLE_IS_EDITING,
+  } from '../actions/actionTypes';
+
+// isEditing have two properties: [0] is the toggle activation and [1] is the expense id;
 
 const INITIAL_STATE = {
   currencies: {},
   isLoading: false,
+  isEditing: [false, null],
   expenses: [],
 };
 
 const wallet = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+
   case EXPENSE_ACTION:
     return {
       ...state,
@@ -25,31 +31,43 @@ const wallet = (state = INITIAL_STATE, action) => {
         }],
       error: '',
     };
+
   case CHANGE_EXPENSE:
     return {
       ...state,
       expenses: [...state.expenses, { ...action.payload }],
     };
+
   case LOADING_TYPE:
     return {
       ...state,
       isLoading: true,
     };
+
   case SUCCESS_TYPE:
     return {
       ...state,
       currencies: action.payload,
     };
+
   case ERROR_TYPE:
     return {
       ...state,
       error: 'error',
     };
+
   case DELETE_EXPENSE:
     return {
       ...state,
       expenses: state.expenses.filter((expense) => expense.id !== action.id),
     };
+
+  case TOGGLE_IS_EDITING:
+    return {
+      ...state,
+      isEditing: action.boolEditing,
+    };
+
   default:
     return state;
   }
