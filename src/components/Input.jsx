@@ -12,20 +12,18 @@ const Input = ({
   value,
 }) => {
   return (
-    <div>
-      <label htmlFor={id}>
-        {labelText}
-        <input
-          type={type}
-          name={name}
-          value={value}
-          id={id}
-          placeholder={placeholder}
-          testid={testID} // Changed from testID to testid to match usage
-          onChange={onChange}
-        />
-      </label>
-    </div>
+    <label htmlFor={id}>
+      {labelText}
+      <input
+        type={type}
+        name={name}
+        value={value}
+        id={id}
+        placeholder={placeholder}
+        testid={testID} // Changed from testID to testid to match usage
+        onChange={onChange}
+      />
+    </label>
   );
 };
 
