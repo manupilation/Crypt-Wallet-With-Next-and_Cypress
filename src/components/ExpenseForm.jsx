@@ -68,13 +68,13 @@ const ExpenseForm = () => {
         name="value"
         placeholder="0"
         id="expense-value"
-        labelText="Valor"
+        labelText="Valor:"
         onChange={handleChange}
       />
       <Select
         value={expense.currency}
         name="currency"
-        labelText="Moeda"
+        labelText="Moeda:"
         id="expense-currency"
         options={filterCurrencies}
         onChange={handleChange}
@@ -82,7 +82,7 @@ const ExpenseForm = () => {
       <Select
         name="method"
         value={expense.method}
-        labelText="Método de pagamento"
+        labelText="Método de pagamento:"
         id="expense-payment"
         options={methods}
         onChange={handleChange}
@@ -90,7 +90,7 @@ const ExpenseForm = () => {
       <Select
         name="tag"
         value={expense.tag}
-        labelText="Tag"
+        labelText="Tag:"
         id="expense-category"
         options={tags}
         onChange={handleChange}
@@ -100,11 +100,11 @@ const ExpenseForm = () => {
         name="description"
         placeholder="..."
         id="expense-description"
-        labelText="Descrição"
+        labelText="Descrição:"
         onChange={handleChange}
       />
       <button type="submit" name="expense-submit" id="expense-submit">
-        Adicionar despesas
+        Adicionar
       </button>
     </form>
   );
