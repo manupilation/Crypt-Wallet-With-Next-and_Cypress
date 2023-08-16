@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
+import Image from 'next/image';
+import Select from './Select';
 
 const Header = () => {
   const user = useSelector((state) => state.user);
@@ -18,21 +20,35 @@ const Header = () => {
 
   return (
     <header data-testid="email-field">
-      <h3>
-        Email:
-        <span>{` ${user.email}`}</span>
-      </h3>
+      <figure>
+        <Image src="/images/logo.png" alt='Wallet Logo' width={120} height={50}/>
+      </figure>
 
-      <div data-testid="total-field">
-        <p>
-          Despesa total:
-          {totalSpending()}
-        </p>
-      </div>
+      <section>
 
-      <div data-testid="header-currency-field">
-        <p>Câmbio: BRL</p>
-      </div>
+        <div>
+          <h3>
+            Email:
+            <span>{` ${user.email}`}</span>
+          </h3>
+        </div>
+
+        <div data-testid="total-field">
+          <p>
+            Despesa total:
+            <span>
+              {totalSpending()}
+            </span>
+          </p>
+        </div>
+
+        <div data-testid="header-currency-field">
+          <p>Câmbio: <Select
+            options={filterCurrencies}
+            selected='BRL'
+            /></p>
+        </div>
+      </section>
     </header>
   );
 };
