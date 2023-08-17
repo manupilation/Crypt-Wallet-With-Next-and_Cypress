@@ -44,7 +44,7 @@ describe('Tests ExpenseForm component', () => {
       <ExpenseForm />, initialStateWithExpenses
     );
 
-    const submitButton = getByText(/adicionar despesas/i);
+    const submitButton = getByText(/adicionar/i);
     const valueInput = getByPlaceholderText(/0/i);
     const descriptionInput = getByPlaceholderText(/\.\.\./i);
 
