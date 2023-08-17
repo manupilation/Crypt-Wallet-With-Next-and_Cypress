@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { deleteExpense } from '../actions';
 import Button from './Button';
 import { actionToggleIsEditing } from '../actions';
+import Image from 'next/image';
 
 const TableBody = () => {
   const getExpenses = useSelector((state) => state.wallet.expenses);
@@ -40,22 +41,22 @@ const TableBody = () => {
             <td>{Number(exchangeRates[currency].ask).toFixed(2)}</td>
             <td>{Number(exchangeRates[currency].ask * value).toFixed(2)}</td>
             <td>Real</td>
-            <td>
-              <Button
+            <td className='optionsCase'>
+              <button
                 type="button"
                 name={id}
-                testID="delete-btn"
+                data-testid="delete-btn"
                 onClick={() => handleClick(id)}
-                text="Excluir"
-              />
+                className="excludeBtn"
+              ><Image src="/images/exclude.svg" width={18} height={18} alt='exclude button'/></button>
 
-              <Button
+              <button
                 type="button"
                 name={id}
-                testID="edit-btn"
+                data-testid="edit-btn"
                 onClick={() => handleIsEditing(id)}
-                text="Editar"
-              />
+                className="editBtn"
+              ><Image src="/images/edit.svg" width={18} height={18} alt='exclude button'/></button>
             </td>
           </tr>
         );
