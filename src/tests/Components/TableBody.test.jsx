@@ -44,9 +44,7 @@ describe('Tests TableBody component', () => {
   });
 
   test('Tests if delete button activate handleClick function sending dispatch', () => {
-    const deleteBtn = screen.getAllByRole('button', {
-      name: /excluir/i
-    })[0];
+    const deleteBtn = screen.getAllByTestId("delete-btn")[0];
 
     fireEvent.click(deleteBtn);
 
@@ -54,9 +52,7 @@ describe('Tests TableBody component', () => {
   });
 
   test('Tests if editar button activate handleUpdate function sending dispatch', () => {
-    const updateBtn = screen.getAllByRole('button', {
-      name: /editar/i
-    })[0];
+    const updateBtn = screen.getAllByTestId("edit-btn")[0];
 
     fireEvent.click(updateBtn);
 
