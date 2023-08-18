@@ -87,7 +87,7 @@
       }
     }
 
-    button[type=submit] {
+    button[type=submit], button[type="button"] {
       cursor: pointer;
       text-transform: uppercase;
       font-weight: 600;
