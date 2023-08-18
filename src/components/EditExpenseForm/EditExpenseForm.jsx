@@ -4,6 +4,7 @@ import Select from '../Select';
 import { methods, tags } from '../../validations/data';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionChangeExpense, actionToggleIsEditing, deleteExpense } from '../../actions';
+import style from './style.module.scss';
 
 const EditExpenseForm = (props) => {
   const {id, currencies} = props;
@@ -41,57 +42,55 @@ const EditExpenseForm = (props) => {
   }
 
   return (
-    <form>
-      <div>
-        <Input
-          type="number"
-          name="value"
-          placeholder="0"
-          id="expense-value"
-          labelText="Valor"
-          onChange={handleChange}
-          value={expense.value}
-        />
-        <Select
-          value={expense.currency}
-          name="currency"
-          labelText="Moeda"
-          id="expense-currency"
-          options={currencies}
-          onChange={handleChange}
-          selected={expense.currency}
-        />
-        <Select
-          name="method"
-          value={expense.method}
-          labelText="Método de pagamento"
-          id="expense-payment"
-          options={methods}
-          onChange={handleChange}
-          selected={expense.method}
-        />
-        <Select
-          name="tag"
-          value={expense.tag}
-          labelText="Tag"
-          id="expense-category"
-          options={tags}
-          onChange={handleChange}
-          selected={expense.tag}
-        />
-        <Input
-          type="text"
-          name="description"
-          placeholder="..."
-          id="expense-description"
-          labelText="Descrição"
-          onChange={handleChange}
-          value={expense.description}
-        />
-        <button type="button" onClick={handleClickToChangeButton}>
-          Editar gasto
-        </button>
-      </div>
+    <form className={style.editExpenseForm}>
+      <Input
+        type="number"
+        name="value"
+        placeholder="0"
+        id="expense-value"
+        labelText="Valor"
+        onChange={handleChange}
+        value={expense.value}
+      />
+      <Select
+        value={expense.currency}
+        name="currency"
+        labelText="Moeda"
+        id="expense-currency"
+        options={currencies}
+        onChange={handleChange}
+        selected={expense.currency}
+      />
+      <Select
+        name="method"
+        value={expense.method}
+        labelText="Método de pagamento"
+        id="expense-payment"
+        options={methods}
+        onChange={handleChange}
+        selected={expense.method}
+      />
+      <Select
+        name="tag"
+        value={expense.tag}
+        labelText="Tag"
+        id="expense-category"
+        options={tags}
+        onChange={handleChange}
+        selected={expense.tag}
+      />
+      <Input
+        type="text"
+        name="description"
+        placeholder="..."
+        id="expense-description"
+        labelText="Descrição"
+        onChange={handleChange}
+        value={expense.description}
+      />
+      <button type="button" onClick={handleClickToChangeButton}>
+        Editar gasto
+      </button>
     </form>
   );
 };
