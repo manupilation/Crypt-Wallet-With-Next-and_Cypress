@@ -102,6 +102,7 @@ const ExpenseForm = () => {
         id="expense-description"
         labelText="Descrição:"
         onChange={handleChange}
+        autoComplete={false}
       />
       <button type="submit" name="expense-submit" id="expense-submit">
         Adicionar
