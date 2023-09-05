@@ -1,66 +1,56 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useDrop } from 'react-dnd';
 import PropTypes from 'prop-types';
-import { deleteExpense } from '../actions';
-import Button from './Button';
-import { actionToggleIsEditing } from '../actions';
-import Image from 'next/image';
+import TableRow from './TableRow';
+import { actionChangeOrder, actionToggleIsEditing } from '../actions';
+
 
 const TableBody = () => {
-  const getExpenses = useSelector((state) => state.wallet.expenses);
   const dispatch = useDispatch();
+  const getExpenses = useSelector((state) => state.wallet.expenses);
 
-  const handleClick = (expenseId) => {
-    dispatch(deleteExpense(expenseId));
-  };
+  const expenses = [...getExpenses];
 
-  const handleIsEditing = (id) => {
-    dispatch(actionToggleIsEditing([true, id]));
+  const [droppedValue, setDroppedValue] = useState({});
+  const [draggedObj, setDraggedObj] = useState({});
+
+  const [{isOver}, drop] = useDrop(() => ({
+    accept: "table",
+    drop: (item) => setDroppedValue(item),
+    collect: monitor => ({
+      isOver: !!monitor.isOver(),
+    }),
+  }));
+
+  // useEffect(() => {
+  //   if (draggedObj && draggedObj.hasOwnProperty('id') && droppedValue && droppedValue.hasOwnProperty('id')) {
+  //     handleChangeIds(draggedObj, droppedValue);
+
+  //     setDraggedObj({});
+  //     setDroppedValue({});
+  //   }
+  // }, [droppedValue, draggedObj]);
+
+  const handleChangeIds = (drag, drop) => {
+    const dragId = drag.id;
+    const removeDragAndDropFromExpenses = expenses
+      .filter((ex) => ex.id !== drag.id && ex.id !== drop.id);
+
+    drag.id = drop.id;
+    drop.id = dragId;
+
+    const addNewIds = removeDragAndDropFromExpenses.concat(drag, drop).sort((a, b) => a.id - b.id);
+
+    dispatch(actionToggleIsEditing([false, null])); // Set false null to prevent drag expenses during editing
+    dispatch(actionChangeOrder(addNewIds));
   }
 
   return (
-    <tbody>
-      {getExpenses.map((expense) => {
-        const {
-          id,
-          currency,
-          description,
-          tag,
-          method,
-          value,
-          exchangeRates,
-        } = expense;
-
-        return (
-          <tr key={id}>
-            <td>{description}</td>
-            <td>{tag}</td>
-            <td>{method}</td>
-            <td>{value}</td>
-            <td>{exchangeRates[currency].name.split('/')[0]}</td>
-            <td>{Number(exchangeRates[currency].ask).toFixed(2)}</td>
-            <td>{Number(exchangeRates[currency].ask * value).toFixed(2)}</td>
-            <td>Real</td>
-            <td className='optionsCase'>
-              <button
-                type="button"
-                name={id}
-                data-testid="delete-btn"
-                onClick={() => handleClick(id)}
-                className="excludeBtn"
-              ><Image src="/images/exclude.svg" width={18} height={18} alt='exclude button'/></button>
-
-              <button
-                type="button"
-                name={id}
-                data-testid="edit-btn"
-                onClick={() => handleIsEditing(id)}
-                className="editBtn"
-              ><Image src="/images/edit.svg" width={18} height={18} alt='exclude button'/></button>
-            </td>
-          </tr>
-        );
-      })}
+    <tbody ref={drop}>
+      {expenses && expenses.map((exp, i) =>
+        <TableRow exp={exp} key={i} setDraggedObj={setDraggedObj}/>
+      )}
     </tbody>
   );
 };
