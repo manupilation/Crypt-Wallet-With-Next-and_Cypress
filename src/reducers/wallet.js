@@ -7,6 +7,7 @@ import {
   SUCCESS_TYPE,
   DELETE_EXPENSE,
   TOGGLE_IS_EDITING,
+  CHANGE_EXPENSES_ORDERS,
   } from '../actions/actionTypes';
 
 // isEditing have two properties: [0] is the toggle activation and [1] is the expense id;
@@ -43,6 +44,12 @@ const wallet = (state = INITIAL_STATE, action) => {
       ...state,
       isLoading: true,
     };
+
+  case CHANGE_EXPENSES_ORDERS:
+    return {
+      ...state,
+      expenses: action.payload,
+    }
 
   case SUCCESS_TYPE:
     return {
