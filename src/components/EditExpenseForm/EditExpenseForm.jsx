@@ -12,7 +12,7 @@ const EditExpenseForm = (props) => {
   const expenses = useSelector((state) => state.wallet.expenses);
   const dispatch = useDispatch();
 
-  const {value, description, currency, method, tag, exchangeRates} = expenses
+  const {value, description, currency, method, tag, exchangeRates} = [...expenses]
   .find((exp) => exp.id === id);
 
   const [expense, setExpense] = useState({
