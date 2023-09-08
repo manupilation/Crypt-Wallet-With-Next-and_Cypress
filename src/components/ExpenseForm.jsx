@@ -6,6 +6,7 @@ import Input from './Input';
 import Select from './Select';
 import { methods, tags } from '../validations/data';
 import EditExpenseForm from './EditExpenseForm/EditExpenseForm';
+import useCurrencies from '../hooks/useCurrencies';
 
 const ExpenseForm = () => {
   const [expense, setExpense] = useState({
@@ -18,6 +19,8 @@ const ExpenseForm = () => {
   });
 
   const currencies = useSelector((state) => state.wallet.currencies);
+  const filterCurrencies = useCurrencies(currencies);
+
   const isEditing = useSelector((state) => state.wallet.isEditing);
 
   const dispatch = useDispatch();
@@ -52,8 +55,7 @@ const ExpenseForm = () => {
     }));
   };
 
-  const filterCoins = Object.keys(currencies);
-  const filterCurrencies = filterCoins.filter((item) => item !== 'USDT');
+
 
   if (isEditing[0]) {
     return (
