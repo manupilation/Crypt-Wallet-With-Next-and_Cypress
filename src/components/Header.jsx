@@ -3,10 +3,14 @@ import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import Image from 'next/image';
 import Select from './Select';
+import useCurrencies from '../hooks/useCurrencies';
 
 const Header = () => {
   const user = useSelector((state) => state.user);
   const expenses = useSelector((state) => state.wallet.expenses);
+  
+  const currencies = useSelector((state) => state.wallet.currencies);
+  const filterCurrencies = useCurrencies(currencies);
 
   const totalSpending = () => {
     const result = expenses.reduce((count, curr) => {
