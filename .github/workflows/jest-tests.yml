@@ -1,0 +1,20 @@
+name: unity-tests
+on: push
+
+jobs:
+  tests-on-environment:
+    runs-on: ${{ matrix.platform }}
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16
+        cache: npm
+        cache-dependency-path: ./package-lock.json
+
+
+    - name: install dependencies
+    - run: npm install
+
+    - name: run tests
+    - run: npm test
