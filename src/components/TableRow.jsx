@@ -3,10 +3,8 @@ import { useDispatch } from 'react-redux';
 import { deleteExpense } from '../actions';
 import { actionToggleIsEditing } from '../actions';
 import Image from 'next/image';
-import { TABLE } from '../constants/dragObjects';
-import { useDrag } from 'react-dnd';
 
-const TableRow = ({ exp, setDraggedObj}) => {
+const TableRow = ({ exp }) => {
   const {
     id,
     currency,
@@ -27,30 +25,9 @@ const TableRow = ({ exp, setDraggedObj}) => {
     dispatch(actionToggleIsEditing([true, id]));
   }
 
-  const [{isDragging}, drag] = useDrag(() => ({
-    type: TABLE.TABLE,
-    item: exp,
-    collect: monitor => ({
-      isDragging: !!monitor.isDragging(),
-    }),
-  }));
-
-  const handleDrop = (e) => {
-    e.preventDefault();
-
-    setDraggedObj(exp);
-  }
-
   return (
     <tr
       key={id}
-      ref={(node) => drag(node)}
-      onDrop={handleDrop}
-      style={{
-        opacity: isDragging ? 0.5 : 1,
-        fontWeight: 'bold',
-        cursor: 'move',
-      }}
     >
       <td>{description}</td>
       <td>{tag}</td>
